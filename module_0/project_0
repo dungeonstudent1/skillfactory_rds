@@ -1,0 +1,31 @@
+"""По принципу Дирихле, надо натренировать компьютер угадывать максимум за 7 раз,
+   деля выборку пополам: 2^7 = 128, что покрывает 100 возможных чисел"""
+
+print ("Загадано число от 1 до 100")
+
+def game_core_optimal(n): #функция, в которой прописан метод угадывания 
+    count = 1
+    guess = 50 # машина начинает с середины  
+	
+    while n != guess:
+        count+=1
+        upper_limit = 0
+		lower_limit = 0
+		
+        if n > guess: 
+            lower_limit += guess
+			guess = round(guess*1,5) #если число больше догадки - делим большие отрезки пополам...
+			if guess > n: # угадываемое число стало меньше guess; надо установить новый предел lower_limit и сократить выборку 
+				guess = round(guess-((guess-lower_limit)/2)) 
+				
+        elif n < guess: 
+            upper_limit += guess
+            guess = round(guess/2) #если число меньше догадки - делим меньшие отрезки пополам...
+            if guess < n: # угадываемое число стало больше guess; надо установить новый предел upper_limit и сократить выборку 
+                guess = round(guess+((upper_limit-guess)/2))
+            
+    return print(count) 
+
+
+game_core_optimal(50) # вместо 50, можно поиграть с компьютером в любое другое число 
+ 
